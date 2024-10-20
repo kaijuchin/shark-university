@@ -16,7 +16,6 @@ services:
       - type: bind
         source: ./site
         target: /var/www/html
-        read_only: true
       - ./site/wp-content/themes:/var/www/html/wp-content/themes
       - ./site/wp-content/plugins:/var/www/html/wp-content/plugins
 
