@@ -1,0 +1,36 @@
+version: "3.1"
+
+services:
+  wordpress:
+    image: wordpress
+    restart: on-failure
+    user: "1000:1000"
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: university-db-1
+      WORDPRESS_DB_USER: cucco
+      WORDPRESS_DB_PASSWORD: "cucco"
+      WORDPRESS_DB_NAME: university
+    volumes:
+      - type: bind
+        source: ./site
+        target: /var/www/html
+        read_only: true
+      - ./site/wp-content/themes:/var/www/html/wp-content/themes
+      - ./site/wp-content/plugins:/var/www/html/wp-content/plugins
+
+  db:
+    image: mysql:5.7.44
+    restart: on-failure
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: university
+      MYSQL_USER: cucco
+      MYSQL_PASSWORD: "cucco"
+      MYSQL_RANDOM_ROOT_PASSWORD: "1"
+    volumes:
+      - ./db:/var/lib/mysql
+
+
